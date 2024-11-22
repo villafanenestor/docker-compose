@@ -4,7 +4,7 @@ services:
     container_name: grafana
     restart: unless-stopped
     volumes:
-       - /grafana/data:/var/lib/grafana
+       - /grafana/data:/var/lib/grafana # Grafana data
     ports:
       - 3000:3000
     environment:
@@ -16,8 +16,8 @@ services:
     container_name: prometheus
     restart: unless-stopped
     volumes:
-      - /prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - /prometheus/config:/prometheus
+      - /prometheus/prometheus.yml:/etc/prometheus/prometheus.yml # Prometheus configuration
+      - /prometheus/config:/prometheus # Prometheus data
     ports:
       - 9090:9090
     command:
