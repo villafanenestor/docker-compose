@@ -1,0 +1,13 @@
+services:
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: unless-stopped
+    environment:
+      DOMAIN: "https://vw.mydomain.tld" # Definir el dominio
+      SIGNUPS_ALLOWED: false # Deshabilitar registro de usuarios
+    user: 1000:1000 ## Cambiar por el usuario y grupo de su sistema para evitar problemas de permisos
+    volumes:
+      - ./vw-data/:/data/
+    ports:
+      - 80:80 #definir el puerto que se usara para acceder a la aplicacion
