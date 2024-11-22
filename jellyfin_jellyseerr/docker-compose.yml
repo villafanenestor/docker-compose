@@ -1,0 +1,37 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    network_mode: 'host'
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/Bogota
+      - DOCKER_MODS=linuxserver/mods:jellyfin-opencl-intel # Se debe agregar para que funcione con GPU Intel, para la transcodificación
+      # - JELLYFIN_PublishedServerUrl=https://192.168.0.250:8096 #optional
+    volumes:
+      - /jellyfin/config:/config
+      - /jellyfin/cache:/cache
+      - /tvshows:/tvshows
+      - /movies:/movies
+    devices:
+      - /dev/dri:/dev/dri # se agregan todos los dispositivos de video
+    ports:
+      - 8096:8096
+      - 8920:8920 #optional
+      - 7359:7359/udp #optional
+      - 1900:1900/udp #optional
+    restart: unless-stopped
+    
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+    - LOG_LEVEL=info
+    - TZ=America/Bogota
+    - PORT=5055 #optional
+    ports:
+    - 5055:5055
+    volumes:
+    - /jellyseerr/config:/app/config
+    restart: unless-stopped
