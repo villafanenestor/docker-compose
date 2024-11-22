@@ -1,0 +1,11 @@
+services:
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+      - TZ=America/Bogota
+      - WATCHTOWER_INCLUDE_RESTARTING=true # Incluye los contenedores que están en estado de reinicio
+      # - WATCHTOWER_RUN_ONCE=true # Ejecuta Watchtower una sola vez y luego se detiene
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # Socket de Docker para que Watchtower pueda comunicarse con el demonio de Docker
+      - /config.json:/config.json # Directorio donde se encuentra el archivo de configuración
+    command: --interval 1000 # Intervalo de tiempo en segundos para comprobar si hay actualizaciones
